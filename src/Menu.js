@@ -1,4 +1,6 @@
+import { useState } from "react";
 import Pizza from "./Pizza";
+import "bootstrap/dist/css/bootstrap.css";
 import "./index.css";
 
 const pizzaData = [
@@ -53,19 +55,41 @@ const pizzaData = [
 ];
 
 export default function Menu() {
+  const [isOpen, setIsOpen] = useState(true);
+  const [pizzaObject, setPizzaObject] = useState(pizzaData);
+
+  console.log(pizzaObject);
+
+  function handleIncreasePrice(pizzaName) {
+    const individualPizzaPrice = pizzaObject.map((pizza) => {
+      if (pizza === pizzaName) {
+        pizza.price += 20;
+      }
+      return pizza;
+    });
+    setPizzaObject(individualPizzaPrice);
+  }
+
   return (
     <>
       <div
         style={{
           display: "flex",
           alignItems: "center",
-          justifyContent: "center",
+          justifyContent: "space-between",
           marginTop: "2rem",
           textTransform: "uppercase",
-          textDecoration: "underline",
+          marginLeft: "41rem",
+          marginRight: "5rem",
         }}
       >
-        Our Menu
+        <h3>Our Menu </h3>
+        <button
+          className="btn btn-danger btn-small"
+          onClick={() => setIsOpen(!isOpen)}
+        >
+          X
+        </button>
       </div>
       <div
         style={{
@@ -86,29 +110,32 @@ export default function Menu() {
             marginTop: "revert",
           }}
         >
-          {pizzaData.map((pizza) =>
-            pizza.soldOut ? (
-              <span
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                We are currently out of stock. 🙁
-              </span>
-            ) : (
-              <Pizza
-                key={pizza.name}
-                name={pizza.name}
-                photoName={pizza.photoName}
-                ingredients={pizza.ingredients}
-                price={pizza.price}
-                quantity={pizza.quantity}
-                soldOut={pizza.soldOut}
-              />
-            )
-          )}
+          {isOpen &&
+            pizzaData.map((pizza) =>
+              pizza.soldOut ? (
+                <span
+                  key={pizza.name}
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  We are currently out of stock. 🙁
+                </span>
+              ) : (
+                <Pizza
+                  key={pizza.name}
+                  name={pizza.name}
+                  photoName={pizza.photoName}
+                  ingredients={pizza.ingredients}
+                  price={pizza.price}
+                  quantity={pizza.quantity}
+                  soldOut={pizza.soldOut}
+                  onIncreasePrice={handleIncreasePrice}
+                />
+              )
+            )}
         </ul>
       </div>
     </>
