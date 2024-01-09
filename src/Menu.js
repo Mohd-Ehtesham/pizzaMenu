@@ -5,6 +5,7 @@ import "./index.css";
 
 const pizzaData = [
   {
+    id: 0,
     name: "Focaccia",
     ingredients: "Bread with italian olive oil and rosemary",
     price: 6,
@@ -13,6 +14,7 @@ const pizzaData = [
     soldOut: false,
   },
   {
+    id: 1,
     name: "Pizza Margherita",
     ingredients: "Tomato and mozarella",
     price: 10,
@@ -21,6 +23,7 @@ const pizzaData = [
     soldOut: false,
   },
   {
+    id: 2,
     name: "Pizza Spinaci",
     ingredients: "Tomato, mozarella, spinach, and ricotta cheese",
     price: 12,
@@ -29,6 +32,7 @@ const pizzaData = [
     soldOut: false,
   },
   {
+    id: 3,
     name: "Pizza Funghi",
     ingredients: "Tomato, mozarella, mushrooms, and onion",
     price: 12,
@@ -37,6 +41,7 @@ const pizzaData = [
     soldOut: false,
   },
   {
+    id: 4,
     name: "Pizza Salamino",
     ingredients: "Tomato, mozarella, and pepperoni",
     price: 15,
@@ -45,6 +50,7 @@ const pizzaData = [
     soldOut: true,
   },
   {
+    id: 5,
     name: "Pizza Prosciutto",
     ingredients: "Tomato, mozarella, ham, aragula, and burrata cheese",
     price: 18,
@@ -58,16 +64,34 @@ export default function Menu() {
   const [isOpen, setIsOpen] = useState(true);
   const [pizzaObject, setPizzaObject] = useState(pizzaData);
 
-  console.log(pizzaObject);
-
-  function handleIncreasePrice(pizzaName) {
-    const individualPizzaPrice = pizzaObject.map((pizza) => {
-      if (pizza === pizzaName) {
-        pizza.price += 20;
+  function handleIncreasePrice(id) {
+    console.log("Clicked on pizza with id:", id);
+    const updatedPizzaObject = pizzaObject.map((pizza) => {
+      if (pizza.id === id) {
+        return {
+          ...pizza,
+          price: pizza.price + 20,
+        };
       }
       return pizza;
     });
-    setPizzaObject(individualPizzaPrice);
+    console.log("Updated Pizza Object:", updatedPizzaObject);
+    setPizzaObject(updatedPizzaObject);
+  }
+
+  function handleDecreasePrice(id) {
+    console.log("Clicked on pizza with id:", id);
+    const updatedPizzaObject = pizzaObject.map((pizza) => {
+      if (pizza.id === id) {
+        return {
+          ...pizza,
+          price: pizza.price - 20,
+        };
+      }
+      return pizza;
+    });
+    console.log("Updated Pizza Object:", updatedPizzaObject);
+    setPizzaObject(updatedPizzaObject);
   }
 
   return (
@@ -126,6 +150,7 @@ export default function Menu() {
               ) : (
                 <Pizza
                   key={pizza.name}
+                  id={pizza.id}
                   name={pizza.name}
                   photoName={pizza.photoName}
                   ingredients={pizza.ingredients}
@@ -133,6 +158,7 @@ export default function Menu() {
                   quantity={pizza.quantity}
                   soldOut={pizza.soldOut}
                   onIncreasePrice={handleIncreasePrice}
+                  onDecreasePrice={handleDecreasePrice}
                 />
               )
             )}

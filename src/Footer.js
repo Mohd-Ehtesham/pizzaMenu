@@ -1,6 +1,5 @@
 export default function Footer() {
   const time = new Date().getHours().toLocaleString();
-  console.log(time);
   const openingTime = 12;
   const closingTime = 22;
   const workingTime = time <= closingTime && time >= openingTime;
