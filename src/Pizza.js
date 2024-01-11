@@ -9,6 +9,9 @@ export default function Pizza({
   quantity,
   onIncreasePrice,
   onDecreasePrice,
+  onIncreasePizzaQuantity,
+  onDecreasePizzaQuantity,
+  onTogglePizzaAvailability,
 }) {
   return (
     <div>
@@ -24,19 +27,32 @@ export default function Pizza({
           <h6>Price: {price}$</h6>
           <button
             className="btn btn-sm btn-primary"
-            onClick={() => onIncreasePrice(id)}
+            onClick={() => onIncreasePrice(name)}
           >
             Increase Price
           </button>
           <button
             className="btn btn-sm btn-warning"
-            onClick={() => onDecreasePrice(id)}
+            onClick={() => onDecreasePrice(name)}
           >
             Decrease Price
           </button>
           <h6>Quantity: {quantity}</h6>
-          <button className="btn btn-sm btn-primary">Increase Quantity</button>
-          <button className="btn btn-sm btn-warning">Decrease Quantity</button>
+          <button
+            className="btn btn-sm btn-primary"
+            onClick={() => onIncreasePizzaQuantity(name)}
+          >
+            Increase Quantity
+          </button>
+          <button
+            className="btn btn-sm btn-warning"
+            onClick={() => onDecreasePizzaQuantity(name)}
+          >
+            Decrease Quantity
+          </button>
+          <button onClick={() => onTogglePizzaAvailability(name)}>
+            Availability
+          </button>
         </div>
       </li>
     </div>

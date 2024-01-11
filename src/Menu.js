@@ -5,7 +5,6 @@ import "./index.css";
 
 const pizzaData = [
   {
-    id: 0,
     name: "Focaccia",
     ingredients: "Bread with italian olive oil and rosemary",
     price: 6,
@@ -14,7 +13,6 @@ const pizzaData = [
     soldOut: false,
   },
   {
-    id: 1,
     name: "Pizza Margherita",
     ingredients: "Tomato and mozarella",
     price: 10,
@@ -23,7 +21,6 @@ const pizzaData = [
     soldOut: false,
   },
   {
-    id: 2,
     name: "Pizza Spinaci",
     ingredients: "Tomato, mozarella, spinach, and ricotta cheese",
     price: 12,
@@ -32,7 +29,6 @@ const pizzaData = [
     soldOut: false,
   },
   {
-    id: 3,
     name: "Pizza Funghi",
     ingredients: "Tomato, mozarella, mushrooms, and onion",
     price: 12,
@@ -41,7 +37,6 @@ const pizzaData = [
     soldOut: false,
   },
   {
-    id: 4,
     name: "Pizza Salamino",
     ingredients: "Tomato, mozarella, and pepperoni",
     price: 15,
@@ -50,7 +45,6 @@ const pizzaData = [
     soldOut: true,
   },
   {
-    id: 5,
     name: "Pizza Prosciutto",
     ingredients: "Tomato, mozarella, ham, aragula, and burrata cheese",
     price: 18,
@@ -64,35 +58,45 @@ export default function Menu() {
   const [isOpen, setIsOpen] = useState(true);
   const [pizzaObject, setPizzaObject] = useState(pizzaData);
 
-  function handleIncreasePrice(id) {
-    console.log("Clicked on pizza with id:", id);
-    const updatedPizzaObject = pizzaObject.map((pizza) => {
-      if (pizza.id === id) {
-        return {
-          ...pizza,
-          price: pizza.price + 20,
-        };
-      }
-      return pizza;
-    });
-    console.log("Updated Pizza Object:", updatedPizzaObject);
-    setPizzaObject(updatedPizzaObject);
-  }
+  const increasePizzaPrice = (name) => {
+    setPizzaObject((pizzaObject) =>
+      pizzaObject.map((pizza) =>
+        pizza.name === name ? { ...pizza, price: pizza.price + 20 } : pizza
+      )
+    );
+  };
 
-  function handleDecreasePrice(id) {
-    console.log("Clicked on pizza with id:", id);
-    const updatedPizzaObject = pizzaObject.map((pizza) => {
-      if (pizza.id === id) {
-        return {
-          ...pizza,
-          price: pizza.price - 20,
-        };
-      }
-      return pizza;
-    });
-    console.log("Updated Pizza Object:", updatedPizzaObject);
-    setPizzaObject(updatedPizzaObject);
-  }
+  const decreasePizzaPrice = (name) => {
+    setPizzaObject((pizzaObject) =>
+      pizzaObject.map((pizza) =>
+        pizza.name === name ? { ...pizza, price: pizza.price - 20 } : pizza
+      )
+    );
+  };
+
+  const increasePizzaQuantity = (name) => {
+    setPizzaObject((pizzaObject) =>
+      pizzaObject.map((pizza) =>
+        pizza.name === name ? { ...pizza, quantity: pizza.quantity + 1 } : pizza
+      )
+    );
+  };
+
+  const decreasePizzaQuantity = (name) => {
+    setPizzaObject((pizzaObject) =>
+      pizzaObject.map((pizza) =>
+        pizza.name === name ? { ...pizza, quantity: pizza.quantity - 1 } : pizza
+      )
+    );
+  };
+
+  const togglePizzaAvailability = (name) => {
+    setPizzaObject((pizzaObject) =>
+      pizzaObject.map((pizza) =>
+        pizza.name === name ? { ...pizza, soldOut: !pizza.soldOut } : pizza
+      )
+    );
+  };
 
   return (
     <>
@@ -135,7 +139,7 @@ export default function Menu() {
           }}
         >
           {isOpen &&
-            pizzaData.map((pizza) =>
+            pizzaObject.map((pizza) =>
               pizza.soldOut ? (
                 <span
                   key={pizza.name}
@@ -157,8 +161,11 @@ export default function Menu() {
                   price={pizza.price}
                   quantity={pizza.quantity}
                   soldOut={pizza.soldOut}
-                  onIncreasePrice={handleIncreasePrice}
-                  onDecreasePrice={handleDecreasePrice}
+                  onIncreasePrice={increasePizzaPrice}
+                  onDecreasePrice={decreasePizzaPrice}
+                  onIncreasePizzaQuantity={increasePizzaQuantity}
+                  onDecreasePizzaQuantity={decreasePizzaQuantity}
+                  onTogglePizzaAvailability={togglePizzaAvailability}
                 />
               )
             )}
