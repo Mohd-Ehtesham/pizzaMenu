@@ -100,17 +100,7 @@ export default function Menu() {
 
   return (
     <>
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          marginTop: "2rem",
-          textTransform: "uppercase",
-          marginLeft: "41rem",
-          marginRight: "5rem",
-        }}
-      >
+      <div className="menu">
         <h3>Our Menu </h3>
         <button
           className="btn btn-danger btn-small"
@@ -119,36 +109,12 @@ export default function Menu() {
           X
         </button>
       </div>
-      <div
-        style={{
-          maxWidth: "80rem",
-          margin: "0 auto",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          gap: "4.8rem",
-        }}
-      >
-        <ul
-          style={{
-            listStyle: "none",
-            display: "grid",
-            gridTemplateColumns: "1fr 1fr",
-            gap: "4.8rem",
-            marginTop: "revert",
-          }}
-        >
+      <div className="layout">
+        <ul className="grid">
           {isOpen &&
             pizzaObject.map((pizza) =>
               pizza.soldOut ? (
-                <span
-                  key={pizza.name}
-                  style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                >
+                <span className="common" key={pizza.name}>
                   We are currently out of stock. 🙁
                 </span>
               ) : (
